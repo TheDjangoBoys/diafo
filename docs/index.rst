@@ -11,7 +11,7 @@ Requirements
 ------------
 
 * **Python**: 3.4, 3.5, 3.6
-* **Django**: 1.11, 2.0b
+* **Django**: 1.11 
 * **Django bootstrap form**: 1.4
 
 
