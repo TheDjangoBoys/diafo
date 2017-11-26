@@ -26,3 +26,10 @@ Quick start
    to use diafo (you'll need the Admin app enabled).
 
 5. Visit http://127.0.0.1:8000/polls/ to participate in the poll.
+
+
+Bugs
+----
+
+Really? Oh well... Please Report. Or better, fix :)
+
