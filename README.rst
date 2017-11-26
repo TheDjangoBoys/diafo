@@ -2,7 +2,7 @@
 DIAFO :: Django Dynamic Form
 ==============================
 
-Diafo is a simple Django app to create dynamic form. One can add question to a form during runtime.
+Diafo is a simple Django app for generaing dynamic forms during the runtime. 
 
 Detailed documentation is in the "docs" directory.
 
@@ -22,7 +22,8 @@ Installation
 
 .. code-block:: sh
 
-    pip install django-filter
+    pip3 install diafo
+    pip3 install django-bootstrap-form
 
 2. Then add ``'django_filters'`` to your ``INSTALLED_APPS``.
 
@@ -30,8 +31,10 @@ Installation
 
     INSTALLED_APPS = [
         ...
-        'django_filters',
+        'diafo',
+	'bootstrapform',
     ]
+
 3. Include the polls URLconf in your project urls.py like this::
 
     url(r'^diafo/', include('diafo.urls')),
@@ -43,50 +46,34 @@ Installation
 Usage
 -----
 
-Django-filter can be used for generating interfaces similar to the Django
-admin's ``list_filter`` interface.  It has an API very similar to Django's
-``ModelForms``.  For example, if you had a Product model you could have a
-filterset for it with the code:
+Diafo can be used for generating Questionnaires consisting various questions during runtime. One can specify the question type like CharField, TextFied, ChoiceField, MultipleChoiceField, etc. Requirement can also be mentioned whether the question is compulsary or not. 
+
+Let see its usage through a simple survey webapp.
 
 .. code-block:: python
 
-    import django_filters
+    from diafo.models import Questionnaire
 
-    class ProductFilter(django_filters.FilterSet):
-        class Meta:
-            model = Product
-            fields = ['name', 'price', 'manufacturer']
+    class Survey(models.Model):
+	title = models.CharField(max_length=200)
+    	form = models.OneToOneField(Questionnaire, null=True)
+
+        
 
 
 And then in your view you could do:
 
 .. code-block:: python
 
-    def product_list(request):
-        filter = ProductFilter(request.GET, queryset=Product.objects.all())
-        return render(request, 'my_app/template.html', {'filter': filter})
+    def new_survey(request):
+	...
+	#get the title by using form or any how..
+	form = Questionnaire.objects.create(name=tilte)
+        survey = Survey.objects.create(title=title, form = form)
+	return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'pk': survey.form.pk}))
+           
 
 
-Usage with Django REST Framework
---------------------------------
-
-Django-filter provides a custom ``FilterSet`` and filter backend for use with
-Django REST Framework.
-
-To use this adjust your import to use
-``django_filters.rest_framework.FilterSet``.
-
-.. code-block:: python
-
-    from django_filters import rest_framework as filters
-
-    class ProductFilter(filters.FilterSet):
-        class Meta:
-            model = Product
-            fields = ('category', 'in_stock')
-
-
-For more details see the `DRF integration docs`_.
 
 
 Support
