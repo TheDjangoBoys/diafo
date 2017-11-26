@@ -2,7 +2,7 @@
 DIAFO :: Django Dynamic Form
 ==============================
 
-Diafo is a simple Django app for generaing dynamic forms during the runtime. 
+Diafo is a simple Django app for generating dynamic forms during the runtime. 
 
 Detailed documentation is in the "docs" directory.
 
