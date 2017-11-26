@@ -55,9 +55,9 @@ Let see its usage through a simple survey webapp.
     from diafo.models import Questionnaire
 
     class Survey(models.Model):
-	    title = models.CharField(max_length=200)
-	    #link the form to your model
-    	questionnaire = models.OneToOneField(Questionnaire, null=True)
+	title = models.CharField(max_length=200)
+        #link the form to your model
+	questionnaire = models.OneToOneField(Questionnaire, null=True)
 
         
 
@@ -67,11 +67,11 @@ And then in your view you could do:
 .. code-block:: python
 
     def new_survey(request):
-	    ...
-	    #get the title by using form or any how..
-	    questionnaire = Questionnaire.objects.create(name=tilte)
+	...
+        #get the title by using form or any how..
+	questionnaire = Questionnaire.objects.create(name=tilte)
         survey = Survey.objects.create(title=title, questionnaire = questionnaire)
-	    return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'pk': survey.form.pk}))
+	return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'pk': survey.form.pk}))
 
 
  
@@ -84,52 +84,47 @@ The diafo main URLs are as follows:
 
 .. code-block:: python
 
-	urlpatterns = [
-	     # for adding question,editing questionnaire detail,seeing responses,etc
-	     url(r'^admin/(?P<pk>[0-9a-f-]+)/$', views.admin_view, name='admin_view'),
-	     # for normal users to fill the questionnaire(no edit rights)
-	     url(r'^user/view/(?P<view_id>[0-9a-f-]+)/$',views.user_view, name = 'user_view'),
-	]
+    urlpatterns = [
+	# for adding question,editing questionnaire detail,seeing responses,etc
+	url(r'^admin/(?P<pk>[0-9a-f-]+)/$', views.admin_view, name='admin_view'),
+        # for normal users to fill the questionnaire(no edit rights)
+        url(r'^user/view/(?P<view_id>[0-9a-f-]+)/$',views.user_view, name = 'user_view'),
+    ]
 
 
 The Questionnaire model is as follows:
 
 .. code-block:: python
 
-	class Questionnaire(models.Model):
-		name = models.CharField(max_length=200, null=True)
-
-		# id used for admin purpose.. used as pk in admin view
-		#id and pk are same since primary key is True
-    		id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-		# view_id - used for normal user (can only see and fill the questionnaire)
-    		view_id = models.CharField(max_length=50,unique=True, default=uuid.uuid4)
-
-		#specific settings (can be edited thru diafo admin view for given questionnaire)
-    		requires_sign_in = models.BooleanField(default = False, blank = True)
-    		collect_identity = models.BooleanField(default = False, blank = True)
+    class Questionnaire(models.Model):	
+	name = models.CharField(max_length=200, null=True)
+	# id used for admin purpose.. used as pk in admin view
+	#id and pk are same since primary key is True
+    	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	# view_id - used for normal user (can only see and fill the questionnaire)	    		view_id = models.CharField(max_length=50,unique=True, default=uuid.uuid4)
+	#specific settings (can be edited thru diafo admin view for given questionnaire)    		requires_sign_in = models.BooleanField(default = False, blank = True)
+    	collect_identity = models.BooleanField(default = False, blank = True)
 
 
-Usage in your views.py or your templates
+This is how you can use use the diafo in your views or templates.
 
 .. code-block:: python
 
-	class yourview(request,your_parameters):
-         	... #do something
-		# get the questionnare object.
-		if want_to_go_on_admin_view:
-			# use questionnare.pk and diafo:admin_view
-			#for use in template href={% url 'diafo:admin_view' questionnaire.pk %}
-			return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'pk': questionnaire.pk}))
-		elseif want_a_rendered_form_for_user:
-			# use questionnaire.view_pk and diafo:user_view
-			#for use in template href={% url 'diafo:user_view' questionnaire.view_id %}
+    class yourview(request,your_parameters):
+	... 
+	# get the questionnare object.
+	if want_to_go_on_admin_view:
+		# use questionnare.pk and diafo:admin_view
+		#for use in template href={% url 'diafo:admin_view' questionnaire.pk %}
+		return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'pk':questionnaire.pk}))
+	elseif want_a_rendered_form_for_user:
+		# use questionnaire.view_pk and diafo:user_view
+		#for use in template href={% url 'diafo:user_view' questionnaire.view_id %}
 
-			return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'view_id': questionnaire.view_id}))
+		return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'view_id':questionnaire.view_id}))
 			
 		
-		
+	
 
 
 Support
