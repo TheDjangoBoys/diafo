@@ -83,6 +83,7 @@ and let the user fill the questionnaire through diafo:user_view.
 The diafo main URLs are as follows:
 
 .. code-block:: python
+
 	urlpatterns = [
 	     # for adding question,editing questionnaire detail,seeing responses,etc
 	     url(r'^admin/(?P<pk>[0-9a-f-]+)/$', views.admin_view, name='admin_view'),
@@ -94,6 +95,7 @@ The diafo main URLs are as follows:
 The Questionnaire model is as follows:
 
 .. code-block:: python
+
 	class Questionnaire(models.Model):
 		name = models.CharField(max_length=200, null=True)
 
@@ -112,6 +114,7 @@ The Questionnaire model is as follows:
 Usage in your views.py or your templates
 
 .. code-block:: python
+
 	class yourview(request,your_parameters):
          	... #do something
 		# get the questionnare object.
