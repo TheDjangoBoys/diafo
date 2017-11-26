@@ -101,8 +101,10 @@ The Questionnaire model is as follows:
 	# id used for admin purpose.. used as pk in admin view
 	#id and pk are same since primary key is True
     	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-	# view_id - used for normal user (can only see and fill the questionnaire)	    		view_id = models.CharField(max_length=50,unique=True, default=uuid.uuid4)
-	#specific settings (can be edited thru diafo admin view for given questionnaire)    		requires_sign_in = models.BooleanField(default = False, blank = True)
+	# view_id - used for normal user (can only see and fill the questionnaire)
+	view_id = models.CharField(max_length=50,unique=True, default=uuid.uuid4)
+	#specific settings (can be edited thru diafo admin view for given questionnaire) 
+   	requires_sign_in = models.BooleanField(default = False, blank = True)
     	collect_identity = models.BooleanField(default = False, blank = True)
 
 
@@ -114,14 +116,13 @@ This is how you can use use the diafo in your views or templates.
 	... 
 	# get the questionnare object.
 	if want_to_go_on_admin_view:
-		# use questionnare.pk and diafo:admin_view
-		#for use in template href={% url 'diafo:admin_view' questionnaire.pk %}
-		return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'pk':questionnaire.pk}))
-	elseif want_a_rendered_form_for_user:
-		# use questionnaire.view_pk and diafo:user_view
-		#for use in template href={% url 'diafo:user_view' questionnaire.view_id %}
-
-		return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'view_id':questionnaire.view_id}))
+	    # use questionnare.pk and diafo:admin_view
+	    #for use in template href={% url 'diafo:admin_view' questionnaire.pk %}
+	    return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'pk':questionnaire.pk}))
+	elif want_a_rendered_form_for_user:
+	    # use questionnaire.view_pk and diafo:user_view
+	    #for use in template href={% url 'diafo:user_view' questionnaire.view_id %}
+	    return HttpResponseRedirect(reverse('diafo:admin_view', kwargs={'view_id':questionnaire.view_id}))
 			
 		
 	
