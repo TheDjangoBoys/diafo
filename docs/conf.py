@@ -166,4 +166,6 @@ texinfo_documents = [
 ]
 
 
+RTD_NEW_THEME = True
+
 
