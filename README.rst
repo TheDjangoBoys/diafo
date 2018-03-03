@@ -25,7 +25,7 @@ Installation
     pip3 install diafo
     pip3 install django-bootstrap-form
 
-2. Then add ``'django_filters'`` to your ``INSTALLED_APPS``.
+2. Then add ``'diafo'`` to your ``INSTALLED_APPS``.
 
 .. code-block:: python
 
