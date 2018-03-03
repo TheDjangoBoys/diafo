@@ -135,4 +135,4 @@ If you have questions about usage or development you can contact me.
 Bugs
 ----
 
-Really? Oh well... Please Report. Or better, fix :)
+Really? Oh well.. Please Report. Or better, fix :)
